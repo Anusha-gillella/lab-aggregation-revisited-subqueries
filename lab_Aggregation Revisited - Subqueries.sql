@@ -56,11 +56,10 @@ order by full_name;
 -- Q4: Use the case statement to create a new column classifying existing columns as either or high value 
 -- transactions based on the amount of payment. If the amount is between 0 and 2, label should be low and if 
 -- the amount is between 2 and 4, the label should be medium, and if it is more than 4, then it should be high.
-select payment_id, 
-	(case when amount >= 0 and amount <= 2 then Amount end) as low,
-	(case when amount >= '3' and amount <= '4' then Amount end) as medium_A,
-    (case when amount >=5 then Amount end) as high
-from 
-	(select payment_id, amount from payment
-    ) sub1
+select payment_id, amount, 
+	case when amount >= '0' and amount <= '2' then 'low'
+		when amount > '2' and amount <= '4' then 'medium'
+		else 'high' 
+    end  
+from (select payment_id, amount from payment) sub1
 order by payment_id;
